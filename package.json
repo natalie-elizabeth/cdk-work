@@ -16,9 +16,13 @@
     "aws-cdk": "^1.2.0"
   },
   "dependencies": {
+    "@aws-cdk/aws-apigateway": "^1.2.0",
+    "@aws-cdk/aws-dynamodb": "^1.2.0",
+    "@aws-cdk/aws-lambda": "^1.2.0",
     "@aws-cdk/aws-sns": "^1.2.0",
     "@aws-cdk/aws-sns-subscriptions": "^1.2.0",
     "@aws-cdk/aws-sqs": "^1.2.0",
-    "@aws-cdk/core": "^1.2.0"
+    "@aws-cdk/core": "^1.2.0",
+    "cdk-dynamo-table-viewer": "^3.0.2"
   }
 }
