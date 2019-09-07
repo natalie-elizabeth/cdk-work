@@ -21,5 +21,13 @@ export class CdkWorkStackVPC extends cdk.Stack {
     });
     sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), "allow internet access");
 
+    const internetGateway = new ec2.CfnInternetGateway(this, "InternetGw", {
+      tags: [
+        {
+          "key": "name",
+          "value": "InternetGw"
+        }
+      ],
+    })
   }
 }
