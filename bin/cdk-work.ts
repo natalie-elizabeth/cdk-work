@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import cdk = require('@aws-cdk/core');
-import { CdkWorkStack } from '../lib/cdk-work-stack';
+import { CdkWorkStackVPC } from './../lib/cdk-work-vpc';
 
 const app = new cdk.App();
-new CdkWorkStack(app, 'CdkWorkStack');
+new CdkWorkStackVPC(app, 'CdkWorkStack');
