@@ -22,5 +22,13 @@ export class CdkWorkStackVPC extends cdk.Stack {
     });
     sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), "allow internet access");
 
+    const clientVPN = new ec2.CfnClientVpnEndpoint(this, "ClientVPN", {
+      description: "Client VPN",
+      clientCidrBlock: "10.0.0.0/22",
+      serverCertificateArn: "",
+      authenticationOptions:
+
+
+    });
   }
 }
