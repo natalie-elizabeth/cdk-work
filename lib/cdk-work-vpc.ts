@@ -11,24 +11,16 @@ export class CdkWorkStackVPC extends cdk.Stack {
     const vpc = new ec2.Vpc(this, "vpc", {
       cidr: vpcCidr,
       maxAzs: 2,
-      vpnGateway: false
-          });
+      vpnGateway: true
+    });
 
     const sg = new ec2.SecurityGroup(this, "securityGroup", {
       vpc,
       securityGroupName: "Cdk-Sg",
       description: "Allow inbound and outbound traffic from the intenet and access to the VPC",
-      allowAllOutbound: true 
+      allowAllOutbound: true
     });
     sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), "allow internet access");
 
-    const internetGateway = new ec2.CfnInternetGateway(this, "InternetGw", {
-      tags: [
-        {
-          "key": "name",
-          "value": "InternetGw"
-        }
-      ],
-    })
   }
 }
