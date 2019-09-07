@@ -11,24 +11,15 @@ export class CdkWorkStackVPC extends cdk.Stack {
     const vpc = new ec2.Vpc(this, "vpc", {
       cidr: vpcCidr,
       maxAzs: 2,
-      subnetConfiguration: [
-        {
-          subnetType: ec2.SubnetType.PRIVATE,
-          cidrMask: 24,
-          name: "PrivateSubnet1"
-        },
-        {
-          subnetType: ec2.SubnetType.PRIVATE,
-          cidrMask: 24,
-          name: "PrivateSubnet2"
-        },
-        {
-          subnetType: ec2.SubnetType.PUBLIC,
-          cidrMask: 28,
-          name: "PublicSubnet1"
-        }
-      ]
+          });
+
+    const sg = new ec2.SecurityGroup(this, "securityGroup", {
+      vpc,
+      securityGroupName: "Cdk-Sg",
+      description: "Allow inbound and outbound traffic from the intenet and access to the VPC",
+      allowAllOutbound: true 
     });
+    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), "allow internet access");
 
   }
 }
