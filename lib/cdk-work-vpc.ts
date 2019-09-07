@@ -11,6 +11,7 @@ export class CdkWorkStackVPC extends cdk.Stack {
     const vpc = new ec2.Vpc(this, "vpc", {
       cidr: vpcCidr,
       maxAzs: 2,
+      vpnGateway: false
           });
 
     const sg = new ec2.SecurityGroup(this, "securityGroup", {
@@ -29,5 +30,6 @@ export class CdkWorkStackVPC extends cdk.Stack {
         }
       ],
     })
+    internetGateway.addDependsOn(vpc);
   }
 }
