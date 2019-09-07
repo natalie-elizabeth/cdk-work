@@ -30,6 +30,5 @@ export class CdkWorkStackVPC extends cdk.Stack {
         }
       ],
     })
-    internetGateway.addDependsOn(vpc);
   }
 }
