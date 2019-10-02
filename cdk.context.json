@@ -6,5 +6,35 @@
     "us-east-1d",
     "us-east-1e",
     "us-east-1f"
-  ]
+  ],
+  "vpc-provider:account=488823795428:filter.tag:Name=CdkWorkStackVPC/vpc:region=us-east-1": {
+    "vpcId": "vpc-01d42fff75f5390a8",
+    "availabilityZones": [
+      "us-east-1a",
+      "us-east-1b"
+    ],
+    "privateSubnetIds": [
+      "subnet-00f811beb066e0cdc",
+      "subnet-0fa5c0649421f1fbb"
+    ],
+    "privateSubnetNames": [
+      "Private"
+    ],
+    "privateSubnetRouteTableIds": [
+      "rtb-02b3442ea26aca32f",
+      "rtb-03a8085bb39f9e6ac"
+    ],
+    "publicSubnetIds": [
+      "subnet-0846647a0b094c025",
+      "subnet-093e421bea37175fa"
+    ],
+    "publicSubnetNames": [
+      "Public"
+    ],
+    "publicSubnetRouteTableIds": [
+      "rtb-0de9d7f46fdd86d6a",
+      "rtb-0ed8c35679f2a2123"
+    ],
+    "vpnGatewayId": "vgw-0dc117c3713a1f6af"
+  }
 }

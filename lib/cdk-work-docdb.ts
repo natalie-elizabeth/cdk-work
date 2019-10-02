@@ -24,32 +24,32 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
     cdkWorkSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'allows public ssh access')
 
     // Subnet group to be used by docDb Cluster
-    const cdkWorkSubnetGroup = new docdb.CfnDBSubnetGroup(this, 'CdkWorkSubnetGroup', {
+    const cdkWorkSubnetGroup = new docdb.CfnDBSubnetGroup(this, 'cdk-subnet-Group', {
       subnetIds: vpc.privateSubnets.map(x => x.subnetId),
-      dbSubnetGroupName: 'CdkWorkSubnetGroup',
-      dbSubnetGroupDescription: 'Subnet Group for StorefrontDocDB'
+      dbSubnetGroupName: 'cdk-subnet-group',
+      dbSubnetGroupDescription: 'Subnet Group for CDKDocDB'
     });
 
     // Create documentdb cluster
-    const cdkWorkDocCluster = new docdb.CfnDBCluster(this, 'CdkWorkDocdbCluster', {
+    const cdkDocCluster = new docdb.CfnDBCluster(this, 'CdkWorkDocCluster', {
       storageEncrypted: true,
       availabilityZones: vpc.availabilityZones.splice(3),
-      dbClusterIdentifier: 'CdkWorkDocdbCluster',
+      dbClusterIdentifier: 'CdkWorkDocCluster',
       masterUsername: process.env.MASTER_USERNAME,
       masterUserPassword: process.env.MASTER_PASSWORD,
       vpcSecurityGroupIds: [cdkWorkSecurityGroup.securityGroupName],
       dbSubnetGroupName: cdkWorkSubnetGroup.dbSubnetGroupName,
       port
     });
-    cdkWorkDocCluster.addDependsOn(cdkWorkSubnetGroup);
+    cdkDocCluster.addDependsOn(cdkWorkSubnetGroup);
 
     // Create primary instance which if it fails, Docdb can promote a corresponding replica
     const cdkWorkDbInstance = new docdb.CfnDBInstance(this, 'CdkWorkDocdbIntance', {
-      dbClusterIdentifier: cdkWorkDocCluster.ref,
+      dbClusterIdentifier: cdkDocCluster.ref,
       dbInstanceClass: "db.r5.large",
       dbInstanceIdentifier: 'CdkWorkDocdbIntance',
       autoMinorVersionUpgrade: true
     });
-    cdkWorkDbInstance.addDependsOn(cdkWorkDocCluster);
+    cdkWorkDbInstance.addDependsOn(cdkDocCluster);
   };
 }
