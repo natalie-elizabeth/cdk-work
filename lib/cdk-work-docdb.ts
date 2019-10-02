@@ -10,7 +10,10 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
     // default documentdb port
     const port = 27017;
 
-    // // Use existing VPC
-    // const vpc = ec2.Vpc.fromLookup(this, 
+    // Use existing VPC
+    const vpc = ec2.Vpc.fromLookup(this, 'CdkStackWorkVPC', {
+      vpcName: 'CdkWorkStackVPC/vpc'
+    });
+    
     };
 }
