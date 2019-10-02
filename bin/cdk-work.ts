@@ -10,7 +10,7 @@ const app_env = {
     region: "us-east-1",
     account: "488823795428"
 }
-new CdkWorkStackVPC(app, 'CdkWorkStack', {
+new CdkWorkStackVPC(app, 'CdkWorkStackVPC', {
     env: app_env
 });
 
