@@ -18,30 +18,30 @@ export class CdkWorkStackVPC extends cdk.Stack {
     });
     // vpc.addVpnConnection()
 
-    const sg = new ec2.SecurityGroup(this, "securityGroup", {
-      vpc,
-      securityGroupName: "Cdk-Sg",
-      description: "Allow inbound and outbound traffic from the intenet and access to the VPC",
-      allowAllOutbound: true
-    });
-    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), "allow internet access");
+    // const sg = new ec2.SecurityGroup(this, "securityGroup", {
+    //   vpc,
+    //   securityGroupName: "Cdk-Sg",
+    //   description: "Allow inbound and outbound traffic from the intenet and access to the VPC",
+    //   allowAllOutbound: true
+    // });
+    // sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.allTraffic(), "allow internet access");
 
-    const clientVPN = new ec2.CfnClientVpnEndpoint(this, "ClientVPN", {
-      connectionLogOptions: {
-        enabled: false
-      },
-      description: "Client VPN",
-      clientCidrBlock: "10.0.0.0/22",
-      serverCertificateArn: `process.env.SERVER_ARN`,
-      authenticationOptions: [
-        {
-          mutualAuthentication: {
-            clientRootCertificateChainArn: `process.env.CLIENT_ARN`
-          },
-          type: "certificate-authentication"
-        }
-      ]
+    // const clientVPN = new ec2.CfnClientVpnEndpoint(this, "ClientVPN", {
+    //   connectionLogOptions: {
+    //     enabled: false
+    //   },
+    //   description: "Client VPN",
+    //   clientCidrBlock: "10.0.0.0/22",
+    //   serverCertificateArn: `process.env.SERVER_ARN`,
+    //   authenticationOptions: [
+    //     {
+    //       mutualAuthentication: {
+    //         clientRootCertificateChainArn: `process.env.CLIENT_ARN`
+    //       },
+    //       type: "certificate-authentication"
+    //     }
+    //   ]
 
-    });
+    // });
   }
 }
