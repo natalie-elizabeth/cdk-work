@@ -1,4 +1,3 @@
-import { CdkWorkStackVPC } from './cdk-work-vpc';
 import cdk = require("@aws-cdk/core");
 import ec2 = require("@aws-cdk/aws-ec2");
 import docdb = require("@aws-cdk/aws-docdb");
@@ -27,9 +26,11 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
     // Subnet group to be used by docDb Cluster
     const cdkWorkSubnetGroup = new docdb.CfnDBSubnetGroup(this, 'CdkWorkSubnetGroup', {
       subnetIds: vpc.privateSubnets.map(x => x.subnetId),
-      dbSubnetGroupName: 'CdkWorkSubnetgroup',
+      dbSubnetGroupName: 'CdkWorkSubnetGroup',
       dbSubnetGroupDescription: 'Subnet Group for StorefrontDocDB'
     });
+
+    // Create documentdb cluster
 
   };
 }
