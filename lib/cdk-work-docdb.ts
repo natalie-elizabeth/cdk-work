@@ -14,6 +14,14 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
     const vpc = ec2.Vpc.fromLookup(this, 'CdkStackWorkVPC', {
       vpcName: 'CdkWorkStackVPC/vpc'
     });
-    
+
+    // Create Security Group
+    const cdkWorkSecurityGroup = new ec2.SecurityGroup(this, 'CdkWorkSecurityGroup', {
+      vpc,
+      securityGroupName: 'CdkWorkSecurityGroup',
+      description: 'Allow ssh access to ec2 instances from anywhere',
+      allowAllOutbound: true
+    });
+    cdkWorkSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'allows public ssh access')
     };
 }
