@@ -46,7 +46,7 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
     // Create primary instance which if it fails, Docdb can promote a corresponding replica
     const cdkWorkDbInstance = new docdb.CfnDBInstance(this, 'CdkWorkDocdbIntance', {
       dbClusterIdentifier: cdkDocCluster.ref,
-      dbInstanceClass: "db.r5.large",
+      dbInstanceClass: "db.r4.large",
       dbInstanceIdentifier: 'CdkWorkDocdbIntance',
       autoMinorVersionUpgrade: true
     });
