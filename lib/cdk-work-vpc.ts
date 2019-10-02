@@ -1,6 +1,7 @@
 import cdk = require('@aws-cdk/core');
 import ec2 = require("@aws-cdk/aws-ec2");
 import { stringToCloudFormation } from '@aws-cdk/core';
+import { type } from 'os';
 
 export class CdkWorkStackVPC extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -9,11 +10,13 @@ export class CdkWorkStackVPC extends cdk.Stack {
     // The code that defines your stack goes here
     const vpcCidr = "10.0.0.0/21";
 
+
     const vpc = new ec2.Vpc(this, "vpc", {
       cidr: vpcCidr,
       maxAzs: 2,
       vpnGateway: true
     });
+    // vpc.addVpnConnection()
 
     const sg = new ec2.SecurityGroup(this, "securityGroup", {
       vpc,
@@ -32,9 +35,10 @@ export class CdkWorkStackVPC extends cdk.Stack {
       serverCertificateArn: `process.env.SERVER_ARN`,
       authenticationOptions: [
         {
-          "MutualAuthentication": {
-            "ClientRootCertificateChainArn": `process.env.CLIENT_ARN`
-          }
+          mutualAuthentication: {
+            clientRootCertificateChainArn: `process.env.CLIENT_ARN`
+          },
+          type: "certificate-authentication"
         }
       ]
 
