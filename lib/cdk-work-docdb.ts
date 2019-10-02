@@ -23,5 +23,13 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
       allowAllOutbound: true
     });
     cdkWorkSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'allows public ssh access')
-    };
+
+    // Subnet group to be used by docDb Cluster
+    const cdkWorkSubnetGroup = new docdb.CfnDBSubnetGroup(this, 'CdkWorkSubnetGroup', {
+      subnetIds: vpc.privateSubnets.map(x => x.subnetId),
+      dbSubnetGroupName: 'CdkWorkSubnetgroup',
+      dbSubnetGroupDescription: 'Subnet Group for StorefrontDocDB'
+    });
+
+  };
 }
