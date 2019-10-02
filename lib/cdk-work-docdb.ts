@@ -31,6 +31,25 @@ export class CdkWorkDocumentDBStack extends cdk.Stack {
     });
 
     // Create documentdb cluster
+    const cdkWorkDocCluster = new docdb.CfnDBCluster(this, 'CdkWorkDocdbCluster', {
+      storageEncrypted: true,
+      availabilityZones: vpc.availabilityZones.splice(3),
+      dbClusterIdentifier: 'CdkWorkDocdbCluster',
+      masterUsername: process.env.MASTER_USERNAME,
+      masterUserPassword: process.env.MASTER_PASSWORD,
+      vpcSecurityGroupIds: [cdkWorkSecurityGroup.securityGroupName],
+      dbSubnetGroupName: cdkWorkSubnetGroup.dbSubnetGroupName,
+      port
+    });
+    cdkWorkDocCluster.addDependsOn(cdkWorkSubnetGroup);
 
+    // Create primary instance which if it fails, Docdb can promote a corresponding replica
+    const cdkWorkDbInstance = new docdb.CfnDBInstance(this, 'CdkWorkDocdbIntance', {
+      dbClusterIdentifier: cdkWorkDocCluster.ref,
+      dbInstanceClass: "db.r5.large",
+      dbInstanceIdentifier: 'CdkWorkDocdbIntance',
+      autoMinorVersionUpgrade: true
+    });
+    cdkWorkDbInstance.addDependsOn(cdkWorkDocCluster);
   };
 }
